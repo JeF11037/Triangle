@@ -12,12 +12,21 @@ namespace Triangle
         public double a;
         public double b;
         public double c;
+        public double h;
 
         public Triangle(double A, double B, double C)
         {
             a = A;
             b = B;
             c = C;
+        }
+
+        public Triangle(double A, double B, double C, double H)
+        {
+            a = A;
+            b = B;
+            c = C;
+            h = H;
         }
 
         public string outputA()
@@ -35,6 +44,11 @@ namespace Triangle
             return Convert.ToString(c);
         }
 
+        public string outputH()
+        {
+            return Convert.ToString(h);
+        }
+
         public double Perimeter()
         {
             double p = 0;
@@ -48,6 +62,13 @@ namespace Triangle
             double p = 0;
             p = (a + b + c) / 2;
             s = Math.Sqrt((p * (p - a) * (p - b) * (p - c)));
+            return s;
+        }
+
+        public double SurfaceWithH()
+        {
+            double s = 0;
+            s = (a * h) / 2;
             return s;
         }
 
@@ -73,6 +94,14 @@ namespace Triangle
             { return c; }
             set
             { c = value; }
+        }
+
+        public double GetSetH
+        {
+            get
+            { return h; }
+            set
+            { h = value; }
         }
 
         public bool ExistTriangle

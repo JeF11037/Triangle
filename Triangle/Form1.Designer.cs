@@ -40,7 +40,7 @@
             this.button1.FlatAppearance.BorderSize = 10;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("MingLiU_HKSCS-ExtB", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(576, 517);
+            this.button1.Location = new System.Drawing.Point(311, 163);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(148, 88);
             this.button1.TabIndex = 0;
@@ -57,6 +57,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Triangle";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }
