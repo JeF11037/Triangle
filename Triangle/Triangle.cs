@@ -29,6 +29,11 @@ namespace Triangle
             h = H;
         }
 
+        public Triangle()
+        {
+
+        }
+
         public string outputA()
         {
             return Convert.ToString(a);
@@ -72,6 +77,13 @@ namespace Triangle
             return s;
         }
 
+        public double GetH(double par)
+        {
+            double res;
+            res = Surface() * 2 / par;
+            return res;
+        }
+
         public double GetSetA
         {
             get
@@ -94,14 +106,6 @@ namespace Triangle
             { return c; }
             set
             { c = value; }
-        }
-
-        public double GetSetH
-        {
-            get
-            { return h; }
-            set
-            { h = value; }
         }
 
         public bool ExistTriangle
