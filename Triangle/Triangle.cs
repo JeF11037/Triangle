@@ -54,6 +54,18 @@ namespace Triangle
             return Convert.ToString(h);
         }
 
+        public double getBiggest()
+        {
+            double big;
+            if (a > b && a > c) { big = a; }
+            else if (b > a && b > c) { big = b; }
+            else if (b == c) { big = a; }
+            else if (a == c) { big = b; }
+            else big = c;
+
+            return big;
+        }
+
         public double Perimeter()
         {
             double p = 0;
@@ -112,9 +124,9 @@ namespace Triangle
         {
             get
             {
-                if ((a > b + c) && (b > a + c) && (c > a + b))
-                    return false;
-                else return true;
+                if ((a + b > c) && (b + c > a) && (c + a > b))
+                    return true;
+                else return false;
             }
         }
     }
