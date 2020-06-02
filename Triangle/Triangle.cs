@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Triangle
 {
@@ -54,7 +49,7 @@ namespace Triangle
             return Convert.ToString(h);
         }
 
-        public double getBiggest()
+        public double getBiggest() // Метод для получения наибольшей стороны
         {
             double big;
             if (a > b && a > c) { big = a; }
@@ -89,7 +84,7 @@ namespace Triangle
             return s;
         }
 
-        public double GetH(double par)
+        public double GetH(double par) // Метод для получения значения высоты на основе данной стороны
         {
             double res;
             res = Surface() * 2 / par;
@@ -124,7 +119,7 @@ namespace Triangle
         {
             get
             {
-                if ((a + b > c) && (b + c > a) && (c + a > b))
+                if ((a + b > c) && (b + c > a) && (c + a > b)) // Поменял формулу
                     return true;
                 else return false;
             }
