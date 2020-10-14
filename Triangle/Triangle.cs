@@ -7,7 +7,15 @@ namespace Triangle
         public double a;
         public double b;
         public double c;
-        public double h;
+        public double ha;
+        public double hb;
+        public double hc;
+        public double sin;
+        public double cos;
+        public double tan;
+        public double alpha;
+        public double beta;
+        public double gamma;
 
         public Triangle(double A, double B, double C)
         {
@@ -16,12 +24,15 @@ namespace Triangle
             c = C;
         }
 
-        public Triangle(double A, double B, double C, double H)
+        public Triangle(double A, double B, double C, double Ha, double Hb, double Hc)
         {
             a = A;
             b = B;
             c = C;
-            h = H;
+            ha = Ha;
+            hb = Hb;
+            hc = Hc;
+
         }
 
         public Triangle()
@@ -44,7 +55,7 @@ namespace Triangle
             return Convert.ToString(c);
         }
 
-        public string outputH()
+        public string outputH(double h)
         {
             return Convert.ToString(h);
         }
@@ -77,7 +88,7 @@ namespace Triangle
             return s;
         }
 
-        public double SurfaceWithH()
+        public double SurfaceWithH(double h)
         {
             double s = 0;
             s = (a * h) / 2;
@@ -89,6 +100,11 @@ namespace Triangle
             double res;
             res = Surface() * 2 / par;
             return res;
+        }
+
+        public double GetAngle(double fside, double sside)
+        {
+            return Math.Asin(fside/sside);
         }
 
         public double GetSetA

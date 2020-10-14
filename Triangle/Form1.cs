@@ -17,7 +17,7 @@ namespace Triangle
 
         Triangle tri = new Triangle(); // Экземпляр класса Triangle
 
-        bool h_check = false; // Переменная типа bool для проверки состояния checkBox1
+        bool h_check = true; // Переменная типа bool для проверки состояния checkBox1
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -48,11 +48,35 @@ namespace Triangle
                 listView1.Items[2].SubItems.Add(tri.outputC()); // Добавляем в Значение listView1 стороны c значение переменной a экземпляра tri
             }
 
-            tri.h = tri.GetH(tri.c); // Добавляем значение переменной h экземпляра tri полученный результатом метода GetH в качестве стороны задаем c
+            tri.ha = tri.GetH(tri.a);
+            tri.hb = tri.GetH(tri.b);
+            tri.hc = tri.GetH(tri.c); // Добавляем значение переменной h экземпляра tri полученный результатом метода GetH в качестве стороны задаем c
+
+            tri.alpha = tri.GetAngle(tri.b, tri.a);
+            tri.beta = tri.GetAngle(tri.a, tri.b);
+            tri.gamma = 180 - tri.alpha - tri.beta;
+
+            if (textBox4.Text == "" && textBox5.Text == "" && textBox6.Text == "")
+            {
+                textBox4.Text = tri.ha.ToString();
+                textBox5.Text = tri.hb.ToString();
+                textBox6.Text = tri.hc.ToString();
+            }
+
+            if (textBox1.Text == "" && textBox2.Text == "" && textBox3.Text == "")
+            {
+                textBox1.Text = tri.a.ToString();
+                textBox2.Text = tri.b.ToString();
+                textBox3.Text = tri.c.ToString();
+            }
 
             double a_ = tri.a;
             double b_ = tri.b;
             double c_ = tri.c;
+
+            double alpha_ = tri.alpha;
+            double beta_ = tri.beta;
+            double gamma_ = tri.gamma;
 
 
             if (a_ == tri.getBiggest()) { tri.c = a_; tri.a = b_; tri.b = c_; } // Перестановка значений для удобства по принципу c равно большей стороне а остальные меньшей
@@ -60,24 +84,41 @@ namespace Triangle
 
             if (h_check) // Проверка состояния checkBox1 при помощи переменной h_check
             {
-                listView1.Items.Add("Высота: h"); // Добавляем в Поле listView1 высоту h
+                listView1.Items.Add("Высота: h(a)"); // Добавляем в Поле listView1 высоту h
+                listView1.Items.Add("Высота: h(b)");
+                listView1.Items.Add("Высота: h(c)");
                 listView1.Items.Add("Площадь: s"); // Добавляем в Поле listView1 площадь s
                 listView1.Items.Add("Периметр: p"); // Добавляем в Поле listView1 периметр p
+                listView1.Items.Add("Синус: ");
+                listView1.Items.Add("Косинус: ");
+                listView1.Items.Add("Тангенс: ");
+                listView1.Items.Add("Альфа: ");
+                listView1.Items.Add("Бета: ");
+                listView1.Items.Add("Гамма: ");
                 listView1.Items.Add("Существует ?"); // Добавляем в Поле listView1 правильность треугольника
                 listView1.Items.Add("Тип"); // Добавляем в Поле listView1 тип треугольника
 
-                if (tri.ExistTriangle) { listView1.Items[6].SubItems.Add("Существует"); } // Проверка на наличие правильности треугольника методом экземпляра tri ExistTriangle. В случае истинны добавляем в Значение listView1 "Существует"
-                else listView1.Items[6].SubItems.Add("Не существует"); // В ином случае добавляем в Значение listView1 "Не существует"
+                if (tri.ExistTriangle) { listView1.Items[14].SubItems.Add("Да"); } // Проверка на наличие правильности треугольника методом экземпляра tri ExistTriangle. В случае истинны добавляем в Значение listView1 "Существует"
+                else listView1.Items[14].SubItems.Add("Нет"); // В ином случае добавляем в Значение listView1 "Не существует"
 
                 if (tri.ExistTriangle) // Проверка на правильность треугольника
                 {
-                    listView1.Items[3].SubItems.Add(Convert.ToString(tri.outputH())); // Добавляем в Значение listView1 высоты h значение переменной h экземпляра tri
-                    listView1.Items[4].SubItems.Add(Convert.ToString(tri.Perimeter())); // Добавляем в Значение listView1 периметра его значение экземпляра tri
-                    listView1.Items[5].SubItems.Add(Convert.ToString(tri.Surface())); // Добавляем в Значение listView1 площади его значение экземпляра tri
+                    listView1.Items[3].SubItems.Add(Convert.ToString(tri.outputH(tri.ha))); // Добавляем в Значение listView1 высоты h значение переменной h экземпляра tri
+                    listView1.Items[4].SubItems.Add(Convert.ToString(tri.outputH(tri.hb)));
+                    listView1.Items[5].SubItems.Add(Convert.ToString(tri.outputH(tri.hc)));
+                    listView1.Items[7].SubItems.Add(Convert.ToString(tri.Perimeter())); // Добавляем в Значение listView1 периметра его значение экземпляра tri
+                    listView1.Items[6].SubItems.Add(Convert.ToString(tri.Surface())); // Добавляем в Значение listView1 площади его значение экземпляра tri
 
-                    if (tri.c * tri.c == tri.a * tri.a + tri.b * tri.b) { listView1.Items[7].SubItems.Add("Прямоугольный"); } // Добавляем в Значение listView1 тип "Прямоугольный" если квадрат большей стороны равно суммы квадратов остальных сторон
-                    else if (tri.c * tri.c < tri.a * tri.a + tri.b * tri.b) { listView1.Items[7].SubItems.Add("Остроугольный"); } // Добавляем в Значение listView1 тип "Остроугольный" если квадрат большей стороны меньше суммы квадратов остальных сторон
-                    else if (tri.c * tri.c > tri.a * tri.a + tri.b * tri.b) { listView1.Items[7].SubItems.Add("Тупоугольный"); } // Добавляем в Значение listView1 тип "Тупоугольный" если квадрат большей стороны больше суммы квадратов остальных сторон
+                    listView1.Items[8].SubItems.Add(Convert.ToString(tri.sin));
+                    listView1.Items[9].SubItems.Add(Convert.ToString(tri.cos));
+                    listView1.Items[10].SubItems.Add(Convert.ToString(tri.tan));
+                    listView1.Items[11].SubItems.Add(Convert.ToString(tri.alpha));
+                    listView1.Items[12].SubItems.Add(Convert.ToString(tri.beta));
+                    listView1.Items[13].SubItems.Add(Convert.ToString(tri.gamma));
+
+                    if (tri.c * tri.c == tri.a * tri.a + tri.b * tri.b) { listView1.Items[15].SubItems.Add("Прямоугольный"); } // Добавляем в Значение listView1 тип "Прямоугольный" если квадрат большей стороны равно суммы квадратов остальных сторон
+                    else if (tri.c * tri.c < tri.a * tri.a + tri.b * tri.b) { listView1.Items[15].SubItems.Add("Остроугольный"); } // Добавляем в Значение listView1 тип "Остроугольный" если квадрат большей стороны меньше суммы квадратов остальных сторон
+                    else if (tri.c * tri.c > tri.a * tri.a + tri.b * tri.b) { listView1.Items[15].SubItems.Add("Тупоугольный"); } // Добавляем в Значение listView1 тип "Тупоугольный" если квадрат большей стороны больше суммы квадратов остальных сторон
                 }
             }
 
@@ -92,7 +133,14 @@ namespace Triangle
 
                 bool equal_sides = false; // Создаем переменную типа bool для проверки равнобедренного треугольника
 
-                if (c < b) { equal_sides = true; } // Задаем значение переменной equal_sides на true в случае если стороны не равны
+                bool check_equal = false;
+                if (b == a)
+                {
+                    check_equal = true;
+                }
+
+                if (c < b && c < a) { equal_sides = true; } // Задаем значение переменной equal_sides на true в случае если стороны не равны
+                if (check_equal) { if (c > a && c > b) { equal_sides = true; } }
 
                 int temp_a_x = 5; // Создаем переменную типа int условной точки a как значение его координаты x
                 int temp_a_y = 5 + a * 50; // Создаем переменную типа int условной точки a как значение его координаты y
@@ -128,7 +176,7 @@ namespace Triangle
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Даровеньки!", "Приветствие");
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -162,6 +210,46 @@ namespace Triangle
         }
 
         private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Нужно ввести: \n- Значение трех сторон\n- Пока все", "Помощник");
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
         {
 
         }
