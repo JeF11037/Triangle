@@ -102,9 +102,9 @@ namespace Triangle
             return res;
         }
 
-        public double GetAngle(double fside, double sside)
+        public double GetAngle(double fside, double sside, double tside)
         {
-            return Math.Asin(fside/sside);
+            return Math.Acos((Math.Pow(fside, 2)+ Math.Pow(sside, 2)- Math.Pow(tside, 2)) /(2* fside* sside));
         }
 
         public double GetSetA
