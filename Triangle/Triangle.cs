@@ -14,27 +14,65 @@ namespace Triangle
         public double alpha;
         public double beta;
         public double gamma;
+        public double s;
+        public double p;
 
         public Triangle(double A, double B, double C)
         {
             a = A;
             b = B;
             c = C;
+            p = Perimeter();
+            s = Surface();
+            ha = GetH(a);
+            hb = GetH(b);
+            hc = GetH(c);
+            alpha = GetAngle(a, b, c);
+            beta = GetAngle(a, c, b);
+            gamma = GetAngle(c, b, a);
+            
         }
 
-        public Triangle(double A, double B, double C, double Ha, double Hb, double Hc)
+        public Triangle(double side, double h, string name)
         {
-            a = A;
-            b = B;
-            c = C;
-            ha = Ha;
-            hb = Hb;
-            hc = Hc;
+            switch (name)
+            {
+                case "a":
+                    a = side;
+                    ha = GetH(a);
+                    s = SurfaceWithH(a, ha);
+                    break;
+                case "b":
+                    b = side;
+                    hb = GetH(b);
+                    s = SurfaceWithH(b, hb);
+                    break;
+                case "c":
+                    c = side;
+                    ha = GetH(c);
+                    s = SurfaceWithH(c, hc);
+                    break;
+
+            }
         }
 
         public Triangle()
         {
+        }
 
+        public void ClearValues()
+        {
+            a = 0;
+            b = 0;
+            c = 0;
+            ha = 0;
+            hb = 0;
+            hc = 0;
+            alpha = 0;
+            beta = 0;
+            gamma = 0;
+            s = 0;
+            p = 0;
         }
 
         public string outputA()
@@ -71,15 +109,12 @@ namespace Triangle
 
         public double Perimeter()
         {
-            double p = 0;
             p = a + b + c;
             return Math.Round(p, 2);
         }
 
         public double Surface()
         {
-            double s = 0;
-            double p = 0;
             p = (a + b + c) / 2;
             s = Math.Round(Math.Sqrt((p * (p - a) * (p - b) * (p - c))), 2);
             return s;

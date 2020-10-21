@@ -44,6 +44,8 @@ namespace Triangle
         Pen p = new Pen(Brushes.Black, 2); // Экземпляр класса Pen cо свойствами черный цвет и ширина 2
 
         Triangle tri = new Triangle(); // Экземпляр класса Triangle
+        Triangle triabc = new Triangle();
+        Triangle trisideh = new Triangle();
 
         bool h_check = true; // Переменная типа bool для проверки состояния checkBox1
 
@@ -77,15 +79,9 @@ namespace Triangle
         {
             listView1.Items.Clear(); // Убираем лишние элементы в listView1
             Gp.Clear(Color.White);
-            Tri.a = 0;
-            Tri.b = 0;
-            Tri.c = 0;
-            Tri.ha = 0;
-            Tri.hb = 0;
-            Tri.hc = 0;
-            Tri.alpha = 0;
-            Tri.beta = 0;
-            Tri.gamma = 0;
+            tri.ClearValues();
+            triabc.ClearValues();
+            trisideh.ClearValues();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -133,64 +129,55 @@ namespace Triangle
 
             if (Tri.a != 0 && Tri.b != 0 && Tri.c != 0)
             {
-                Tri.ha = Tri.GetH(Tri.a);
-                Tri.hb = Tri.GetH(Tri.b);
-                Tri.hc = Tri.GetH(Tri.c);
+                triabc = new Triangle(Tri.a, Tri.b, Tri.c);
             } // Добавляем значение переменной h экземпляра tri полученный результатом метода GetH в качестве стороны задаем c
-
-            if (Tri.a != 0 && Tri.b != 0 && Tri.c != 0)
-            {
-                Tri.alpha = Tri.GetAngle(Tri.a, Tri.b, Tri.c);
-                Tri.beta = Tri.GetAngle(Tri.a, Tri.c, Tri.b);
-                Tri.gamma = Tri.GetAngle(Tri.b, Tri.c, Tri.a);
-            }
 
             if (textBox9.Text == "")
             {
-                textBox9.Text = Tri.alpha.ToString();
+                textBox9.Text = triabc.alpha.ToString();
             }
             if (textBox8.Text == "")
             {
-                textBox8.Text = Tri.beta.ToString();
+                textBox8.Text = triabc.beta.ToString();
             }
             if (textBox7.Text == "")
             {
-                textBox7.Text = Tri.gamma.ToString();
+                textBox7.Text = triabc.gamma.ToString();
             }
 
             if (textBox4.Text == "")
             {
-                textBox4.Text = Tri.ha.ToString();
+                textBox4.Text = triabc.ha.ToString();
             }
             if (textBox5.Text == "")
             {
-                textBox5.Text = Tri.hb.ToString();
+                textBox5.Text = triabc.hb.ToString();
             }
             if (textBox6.Text == "")
             {
-                textBox6.Text = Tri.hc.ToString();
+                textBox6.Text = triabc.hc.ToString();
             }
 
             if (textBox1.Text == "")
             {
-                textBox1.Text = Tri.a.ToString();
+                textBox1.Text = triabc.a.ToString();
             }
             if (textBox2.Text == "")
             {
-                textBox2.Text = Tri.b.ToString();
+                textBox2.Text = triabc.b.ToString();
             }
             if (textBox3.Text == "")
             {
-                textBox3.Text = Tri.c.ToString();
+                textBox3.Text = triabc.c.ToString();
             }
 
-            double a_ = Tri.a;
-            double b_ = Tri.b;
-            double c_ = Tri.c;
+            double a_ = triabc.a;
+            double b_ = triabc.b;
+            double c_ = triabc.c;
 
-            double alpha_ = Tri.alpha;
-            double beta_ = Tri.beta;
-            double gamma_ = Tri.gamma;
+            double alpha_ = triabc.alpha;
+            double beta_ = triabc.beta;
+            double gamma_ = triabc.gamma;
 
             if (H_check) // Проверка состояния checkBox1 при помощи переменной h_check
             {
@@ -210,31 +197,34 @@ namespace Triangle
 
                 if (Tri.a != 0 && Tri.ha != 0)
                 {
+                    trisideh = new Triangle(Tri.a, Tri.ha, "a");
                     listView1.Items[3].SubItems.Add(Convert.ToString(Tri.outputH(Tri.ha)));
                     listView1.Items[6].SubItems.Add(Convert.ToString(Tri.SurfaceWithH(Tri.a, Tri.ha)));
                 }
                 if (Tri.b != 0 && Tri.hb != 0)
                 {
+                    trisideh = new Triangle(Tri.b, Tri.hb, "b");
                     listView1.Items[4].SubItems.Add(Convert.ToString(Tri.outputH(Tri.hb)));
                     listView1.Items[6].SubItems.Add(Convert.ToString(Tri.SurfaceWithH(Tri.b, Tri.hb)));
                 }
                 if (Tri.c != 0 && Tri.hc != 0)
                 {
+                    trisideh = new Triangle(Tri.c, Tri.hc, "c");
                     listView1.Items[5].SubItems.Add(Convert.ToString(Tri.outputH(Tri.hc)));
                     listView1.Items[6].SubItems.Add(Convert.ToString(Tri.SurfaceWithH(Tri.c, Tri.hc)));
                 }
 
                 if (Tri.ExistTriangle) // Проверка на правильность треугольника
                 {
-                    listView1.Items[3].SubItems.Add(Convert.ToString(Tri.outputH(Tri.ha))); // Добавляем в Значение listView1 высоты h значение переменной h экземпляра tri
-                    listView1.Items[4].SubItems.Add(Convert.ToString(Tri.outputH(Tri.hb)));
-                    listView1.Items[5].SubItems.Add(Convert.ToString(Tri.outputH(Tri.hc)));
-                    listView1.Items[7].SubItems.Add(Convert.ToString(Tri.Perimeter())); // Добавляем в Значение listView1 периметра его значение экземпляра tri
-                    listView1.Items[6].SubItems.Add(Convert.ToString(Tri.Surface())); // Добавляем в Значение listView1 площади его значение экземпляра tri
+                    listView1.Items[3].SubItems.Add(Convert.ToString(triabc.outputH(triabc.ha))); // Добавляем в Значение listView1 высоты h значение переменной h экземпляра tri
+                    listView1.Items[4].SubItems.Add(Convert.ToString(triabc.outputH(triabc.hb)));
+                    listView1.Items[5].SubItems.Add(Convert.ToString(triabc.outputH(triabc.hc)));
+                    listView1.Items[7].SubItems.Add(Convert.ToString(triabc.Perimeter())); // Добавляем в Значение listView1 периметра его значение экземпляра tri
+                    listView1.Items[6].SubItems.Add(Convert.ToString(triabc.Surface())); // Добавляем в Значение listView1 площади его значение экземпляра tri
 
-                    listView1.Items[8].SubItems.Add(Convert.ToString(Tri.alpha));
-                    listView1.Items[9].SubItems.Add(Convert.ToString(Tri.beta));
-                    listView1.Items[10].SubItems.Add(Convert.ToString(Tri.gamma));
+                    listView1.Items[8].SubItems.Add(Convert.ToString(triabc.alpha));
+                    listView1.Items[9].SubItems.Add(Convert.ToString(triabc.beta));
+                    listView1.Items[10].SubItems.Add(Convert.ToString(triabc.gamma));
 
                     if (Tri.c * Tri.c == Tri.a * Tri.a + Tri.b * Tri.b) { listView1.Items[12].SubItems.Add("Прямоугольный"); } // Добавляем в Значение listView1 тип "Прямоугольный" если квадрат большей стороны равно суммы квадратов остальных сторон
                     else if (Tri.c * Tri.c < Tri.a * Tri.a + Tri.b * Tri.b) { listView1.Items[12].SubItems.Add("Остроугольный"); } // Добавляем в Значение listView1 тип "Остроугольный" если квадрат большей стороны меньше суммы квадратов остальных сторон
