@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace Triangle
 {
@@ -10,9 +11,6 @@ namespace Triangle
         public double ha;
         public double hb;
         public double hc;
-        public double sin;
-        public double cos;
-        public double tan;
         public double alpha;
         public double beta;
         public double gamma;
@@ -104,7 +102,7 @@ namespace Triangle
 
         public double GetAngle(double fside, double sside, double tside)
         {
-            return Math.Acos((Math.Pow(fside, 2)+ Math.Pow(sside, 2)- Math.Pow(tside, 2)) /(2* fside* sside));
+            return Math.Round(Math.Acos((Math.Pow(fside, 2) + Math.Pow(sside, 2) - Math.Pow(tside, 2)) / (2 * fside * sside)) * (180 / Math.PI), 2);
         }
 
         public double GetSetA

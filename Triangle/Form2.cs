@@ -80,12 +80,6 @@ namespace Triangle
             textBox9 = new TextBox();
             label10 = new Label();
             button2 = new Button();
-            label11 = new Label();
-            label12 = new Label();
-            textBox10 = new TextBox();
-            textBox11 = new TextBox();
-            textBox12 = new TextBox();
-            label13 = new Label();
             SuspendLayout();
 
 
@@ -213,7 +207,7 @@ namespace Triangle
 
 
             label5.AutoSize = true;
-            label5.Location = new Point(667, 50);
+            label5.Location = new Point(707, 50);
             label5.Name = "label5";
             label5.Size = new Size(21, 13);
             label5.TabIndex = 16;
@@ -222,7 +216,7 @@ namespace Triangle
 
 
 
-            textBox4.Location = new Point(694, 47);
+            textBox4.Location = new Point(734, 47);
             textBox4.Name = "textBox4";
             textBox4.Size = new Size(40, 20);
             textBox4.TabIndex = 17;
@@ -230,7 +224,7 @@ namespace Triangle
 
 
 
-            textBox5.Location = new Point(694, 76);
+            textBox5.Location = new Point(734, 76);
             textBox5.Name = "textBox5";
             textBox5.Size = new Size(40, 20);
             textBox5.TabIndex = 18;
@@ -238,7 +232,7 @@ namespace Triangle
 
 
 
-            textBox6.Location = new Point(694, 104);
+            textBox6.Location = new Point(734, 104);
             textBox6.Name = "textBox6";
             textBox6.Size = new Size(40, 20);
             textBox6.TabIndex = 19;
@@ -247,7 +241,7 @@ namespace Triangle
 
 
             label6.AutoSize = true;
-            label6.Location = new Point(667, 79);
+            label6.Location = new Point(707, 79);
             label6.Name = "label6";
             label6.Size = new Size(21, 13);
             label6.TabIndex = 20;
@@ -257,7 +251,7 @@ namespace Triangle
 
 
             label7.AutoSize = true;
-            label7.Location = new Point(668, 107);
+            label7.Location = new Point(708, 107);
             label7.Name = "label7";
             label7.Size = new Size(21, 13);
             label7.TabIndex = 21;
@@ -325,54 +319,6 @@ namespace Triangle
 
 
 
-            label11.AutoSize = true;
-            label11.Location = new Point(747, 109);
-            label11.Name = "label11";
-            label11.Size = new Size(26, 13);
-            label11.TabIndex = 34;
-            label11.Text = "Tan";
-
-
-
-            label12.AutoSize = true;
-            label12.Location = new Point(746, 81);
-            label12.Name = "label12";
-            label12.Size = new Size(25, 13);
-            label12.TabIndex = 33;
-            label12.Text = "Cos";
-
-
-
-            textBox10.Location = new Point(773, 106);
-            textBox10.Name = "textBox10";
-            textBox10.Size = new Size(40, 20);
-            textBox10.TabIndex = 32;
-
-
-
-            textBox11.Location = new Point(773, 78);
-            textBox11.Name = "textBox11";
-            textBox11.Size = new Size(40, 20);
-            textBox11.TabIndex = 31;
-
-
-
-            textBox12.Location = new Point(773, 49);
-            textBox12.Name = "textBox12";
-            textBox12.Size = new Size(40, 20);
-            textBox12.TabIndex = 30;
-
-
-
-            label13.AutoSize = true;
-            label13.Location = new Point(746, 52);
-            label13.Name = "label13";
-            label13.Size = new Size(22, 13);
-            label13.TabIndex = 29;
-            label13.Text = "Sin";
-
-
-
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(935, 609);
@@ -420,6 +366,15 @@ namespace Triangle
 
             listView1.Items.Clear(); // Убираем лишние элементы в listView1
             Gp.Clear(Color.White); // Убираем лишние точки, линии, фигуры на полотне
+            Tri.a = 0;
+            Tri.b = 0;
+            Tri.c = 0;
+            Tri.ha = 0;
+            Tri.hb = 0;
+            Tri.hc = 0;
+            Tri.alpha = 0;
+            Tri.beta = 0;
+            Tri.gamma = 0;
 
             listView1.Items.Add("Сторона: a"); // Добавляем в Поле listView1 сторону a
             listView1.Items.Add("Сторона: b"); // Добавляем в Поле listView1 сторону b
@@ -443,25 +398,69 @@ namespace Triangle
                 listView1.Items[2].SubItems.Add(Tri.outputC()); // Добавляем в Значение listView1 стороны c значение переменной a экземпляра tri
             }
 
-            Tri.ha = Tri.GetH(Tri.a);
-            Tri.hb = Tri.GetH(Tri.b);
-            Tri.hc = Tri.GetH(Tri.c); // Добавляем значение переменной h экземпляра tri полученный результатом метода GetH в качестве стороны задаем c
+            if (Tri.a != 0 && Tri.b != 0 && Tri.c != 0)
+            {
+                Tri.ha = Tri.GetH(Tri.a);
+                Tri.hb = Tri.GetH(Tri.b);
+                Tri.hc = Tri.GetH(Tri.c);
+            } // Добавляем значение переменной h экземпляра tri полученный результатом метода GetH в качестве стороны задаем c
 
-            Tri.alpha = Tri.GetAngle(Tri.a, Tri.b, Tri.c);
-            Tri.beta = Tri.GetAngle(Tri.a, Tri.c, Tri.b);
-            Tri.gamma = Tri.GetAngle(Tri.b, Tri.c, Tri.a);
+            if (Tri.a != 0 && Tri.b != 0 && Tri.c != 0)
+            {
+                Tri.alpha = Tri.GetAngle(Tri.a, Tri.b, Tri.c);
+                Tri.beta = Tri.GetAngle(Tri.a, Tri.c, Tri.b);
+                Tri.gamma = Tri.GetAngle(Tri.b, Tri.c, Tri.a);
+            }
 
-            if (textBox4.Text == "" && textBox5.Text == "" && textBox6.Text == "")
+            if (textBox9.Text == "")
+            {
+                textBox9.Text = Tri.alpha.ToString();
+            }
+            if (textBox8.Text == "")
+            {
+                textBox8.Text = Tri.beta.ToString();
+            }
+            if (textBox7.Text == "")
+            {
+                textBox7.Text = Tri.gamma.ToString();
+            }
+
+            if (textBox4.Text == "")
             {
                 textBox4.Text = Tri.ha.ToString();
+            }
+            if (textBox5.Text == "")
+            {
                 textBox5.Text = Tri.hb.ToString();
+            }
+            if (textBox6.Text == "")
+            {
                 textBox6.Text = Tri.hc.ToString();
             }
 
-            if (textBox1.Text == "" && textBox2.Text == "" && textBox3.Text == "")
+            if (textBox4.Text == "")
+            {
+                textBox4.Text = Tri.ha.ToString();
+            }
+            if (textBox5.Text == "")
+            {
+                textBox5.Text = Tri.hb.ToString();
+            }
+            if (textBox6.Text == "")
+            {
+                textBox6.Text = Tri.hc.ToString();
+            }
+
+            if (textBox1.Text == "")
             {
                 textBox1.Text = Tri.a.ToString();
+            }
+            if (textBox2.Text == "")
+            {
                 textBox2.Text = Tri.b.ToString();
+            }
+            if (textBox3.Text == "")
+            {
                 textBox3.Text = Tri.c.ToString();
             }
 
@@ -504,9 +503,6 @@ namespace Triangle
                     listView1.Items[7].SubItems.Add(Convert.ToString(Tri.Perimeter())); // Добавляем в Значение listView1 периметра его значение экземпляра tri
                     listView1.Items[6].SubItems.Add(Convert.ToString(Tri.Surface())); // Добавляем в Значение listView1 площади его значение экземпляра tri
 
-                    listView1.Items[8].SubItems.Add(Convert.ToString(Tri.sin));
-                    listView1.Items[9].SubItems.Add(Convert.ToString(Tri.cos));
-                    listView1.Items[10].SubItems.Add(Convert.ToString(Tri.tan));
                     listView1.Items[11].SubItems.Add(Convert.ToString(Tri.alpha));
                     listView1.Items[12].SubItems.Add(Convert.ToString(Tri.beta));
                     listView1.Items[13].SubItems.Add(Convert.ToString(Tri.gamma));
