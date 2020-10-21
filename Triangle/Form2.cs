@@ -38,6 +38,7 @@ namespace Triangle
         private TextBox textBox11;
         private TextBox textBox12;
         private Label label13;
+        private Button button3;
 
         Graphics gp; // Экземпляр класса Graphics
         Pen p = new Pen(Brushes.Black, 2); // Экземпляр класса Pen cо свойствами черный цвет и ширина 2
@@ -52,6 +53,251 @@ namespace Triangle
         public bool H_check { get => h_check; set => h_check = value; }
 
         public Form2()
+        {
+            Elements();
+        }
+
+        private void ClearTheBoard(object sender, EventArgs e)
+        {
+            ClearTheBoard();
+            textBox1.Text = "";
+            textBox2.Text = "";
+            textBox3.Text = "";
+
+            textBox4.Text = "";
+            textBox5.Text = "";
+            textBox6.Text = "";
+
+            textBox7.Text = "";
+            textBox8.Text = "";
+            textBox9.Text = "";
+        }
+
+        private void ClearTheBoard()
+        {
+            listView1.Items.Clear(); // Убираем лишние элементы в listView1
+            Gp.Clear(Color.White);
+            Tri.a = 0;
+            Tri.b = 0;
+            Tri.c = 0;
+            Tri.ha = 0;
+            Tri.hb = 0;
+            Tri.hc = 0;
+            Tri.alpha = 0;
+            Tri.beta = 0;
+            Tri.gamma = 0;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            double r; // временная переменная типа double для метода TryParse
+
+            ClearTheBoard();
+
+            listView1.Items.Add("Сторона: a"); // Добавляем в Поле listView1 сторону a
+            listView1.Items.Add("Сторона: b"); // Добавляем в Поле listView1 сторону b
+            listView1.Items.Add("Сторона: c"); // Добавляем в Поле listView1 сторону c
+
+            if (double.TryParse(textBox1.Text, out r)) // Проверка на корректный ввод стороны a
+            {
+                Tri.a = Convert.ToDouble(textBox1.Text); // Добавляем значение переменной a экземпляра tri введенного пользователя
+                listView1.Items[0].SubItems.Add(Tri.outputA()); // Добавляем в Значение listView1 стороны a значение переменной a экземпляра tri
+            }
+
+            if (double.TryParse(textBox2.Text, out r)) // Проверка на корректный ввод стороны b
+            {
+                Tri.b = Convert.ToDouble(textBox2.Text); // Добавляем значение переменной b экземпляра tri введенного пользователя
+                listView1.Items[1].SubItems.Add(Tri.outputB()); // Добавляем в Значение listView1 стороны b значение переменной a экземпляра tri
+            }
+
+            if (double.TryParse(textBox3.Text, out r)) // Проверка на корректный ввод стороны c
+            {
+                Tri.c = Convert.ToDouble(textBox3.Text); // Добавляем значение переменной c экземпляра tri введенного пользователя
+                listView1.Items[2].SubItems.Add(Tri.outputC()); // Добавляем в Значение listView1 стороны c значение переменной a экземпляра tri
+            }
+
+            if (double.TryParse(textBox4.Text, out r))
+            {
+                Tri.ha = Convert.ToDouble(textBox4.Text);
+            }
+
+            if (double.TryParse(textBox5.Text, out r))
+            {
+                Tri.hb = Convert.ToDouble(textBox5.Text);
+            }
+
+            if (double.TryParse(textBox6.Text, out r))
+            {
+                Tri.hc = Convert.ToDouble(textBox6.Text);
+            }
+
+            if (Tri.a != 0 && Tri.b != 0 && Tri.c != 0)
+            {
+                Tri.ha = Tri.GetH(Tri.a);
+                Tri.hb = Tri.GetH(Tri.b);
+                Tri.hc = Tri.GetH(Tri.c);
+            } // Добавляем значение переменной h экземпляра tri полученный результатом метода GetH в качестве стороны задаем c
+
+            if (Tri.a != 0 && Tri.b != 0 && Tri.c != 0)
+            {
+                Tri.alpha = Tri.GetAngle(Tri.a, Tri.b, Tri.c);
+                Tri.beta = Tri.GetAngle(Tri.a, Tri.c, Tri.b);
+                Tri.gamma = Tri.GetAngle(Tri.b, Tri.c, Tri.a);
+            }
+
+            if (textBox9.Text == "")
+            {
+                textBox9.Text = Tri.alpha.ToString();
+            }
+            if (textBox8.Text == "")
+            {
+                textBox8.Text = Tri.beta.ToString();
+            }
+            if (textBox7.Text == "")
+            {
+                textBox7.Text = Tri.gamma.ToString();
+            }
+
+            if (textBox4.Text == "")
+            {
+                textBox4.Text = Tri.ha.ToString();
+            }
+            if (textBox5.Text == "")
+            {
+                textBox5.Text = Tri.hb.ToString();
+            }
+            if (textBox6.Text == "")
+            {
+                textBox6.Text = Tri.hc.ToString();
+            }
+
+            if (textBox1.Text == "")
+            {
+                textBox1.Text = Tri.a.ToString();
+            }
+            if (textBox2.Text == "")
+            {
+                textBox2.Text = Tri.b.ToString();
+            }
+            if (textBox3.Text == "")
+            {
+                textBox3.Text = Tri.c.ToString();
+            }
+
+            double a_ = Tri.a;
+            double b_ = Tri.b;
+            double c_ = Tri.c;
+
+            double alpha_ = Tri.alpha;
+            double beta_ = Tri.beta;
+            double gamma_ = Tri.gamma;
+
+            if (H_check) // Проверка состояния checkBox1 при помощи переменной h_check
+            {
+                listView1.Items.Add("Высота: H(a)"); // Добавляем в Поле listView1 высоту h
+                listView1.Items.Add("Высота: H(b)");
+                listView1.Items.Add("Высота: H(c)");
+                listView1.Items.Add("Площадь: s"); // Добавляем в Поле listView1 площадь s
+                listView1.Items.Add("Периметр: p"); // Добавляем в Поле listView1 периметр p
+                listView1.Items.Add("Альфа: ");
+                listView1.Items.Add("Бета: ");
+                listView1.Items.Add("Гамма: ");
+                listView1.Items.Add("Существует ?"); // Добавляем в Поле listView1 правильность треугольника
+                listView1.Items.Add("Тип"); // Добавляем в Поле listView1 тип треугольника
+
+                if (Tri.ExistTriangle) { listView1.Items[11].SubItems.Add("Да"); } // Проверка на наличие правильности треугольника методом экземпляра tri ExistTriangle. В случае истинны добавляем в Значение listView1 "Существует"
+                else listView1.Items[11].SubItems.Add("Нет"); // В ином случае добавляем в Значение listView1 "Не существует"
+
+                if (Tri.a != 0 && Tri.ha != 0)
+                {
+                    listView1.Items[3].SubItems.Add(Convert.ToString(Tri.outputH(Tri.ha)));
+                    listView1.Items[6].SubItems.Add(Convert.ToString(Tri.SurfaceWithH(Tri.a, Tri.ha)));
+                }
+                if (Tri.b != 0 && Tri.hb != 0)
+                {
+                    listView1.Items[4].SubItems.Add(Convert.ToString(Tri.outputH(Tri.hb)));
+                    listView1.Items[6].SubItems.Add(Convert.ToString(Tri.SurfaceWithH(Tri.b, Tri.hb)));
+                }
+                if (Tri.c != 0 && Tri.hc != 0)
+                {
+                    listView1.Items[5].SubItems.Add(Convert.ToString(Tri.outputH(Tri.hc)));
+                    listView1.Items[6].SubItems.Add(Convert.ToString(Tri.SurfaceWithH(Tri.c, Tri.hc)));
+                }
+
+                if (Tri.ExistTriangle) // Проверка на правильность треугольника
+                {
+                    listView1.Items[3].SubItems.Add(Convert.ToString(Tri.outputH(Tri.ha))); // Добавляем в Значение listView1 высоты h значение переменной h экземпляра tri
+                    listView1.Items[4].SubItems.Add(Convert.ToString(Tri.outputH(Tri.hb)));
+                    listView1.Items[5].SubItems.Add(Convert.ToString(Tri.outputH(Tri.hc)));
+                    listView1.Items[7].SubItems.Add(Convert.ToString(Tri.Perimeter())); // Добавляем в Значение listView1 периметра его значение экземпляра tri
+                    listView1.Items[6].SubItems.Add(Convert.ToString(Tri.Surface())); // Добавляем в Значение listView1 площади его значение экземпляра tri
+
+                    listView1.Items[8].SubItems.Add(Convert.ToString(Tri.alpha));
+                    listView1.Items[9].SubItems.Add(Convert.ToString(Tri.beta));
+                    listView1.Items[10].SubItems.Add(Convert.ToString(Tri.gamma));
+
+                    if (Tri.c * Tri.c == Tri.a * Tri.a + Tri.b * Tri.b) { listView1.Items[12].SubItems.Add("Прямоугольный"); } // Добавляем в Значение listView1 тип "Прямоугольный" если квадрат большей стороны равно суммы квадратов остальных сторон
+                    else if (Tri.c * Tri.c < Tri.a * Tri.a + Tri.b * Tri.b) { listView1.Items[12].SubItems.Add("Остроугольный"); } // Добавляем в Значение listView1 тип "Остроугольный" если квадрат большей стороны меньше суммы квадратов остальных сторон
+                    else if (Tri.c * Tri.c > Tri.a * Tri.a + Tri.b * Tri.b) { listView1.Items[12].SubItems.Add("Тупоугольный"); } // Добавляем в Значение listView1 тип "Тупоугольный" если квадрат большей стороны больше суммы квадратов остальных сторон
+                }
+            }
+
+            if (Tri.ExistTriangle) // Проверка правильности треугольника для отрисовки на полотне
+            {
+                if (a_ == Tri.getBiggest()) { Tri.c = a_; Tri.a = b_; Tri.b = c_; } // Перестановка значений для удобства по принципу c равно большей стороне а остальные меньшей
+                else if (b_ == Tri.getBiggest()) { Tri.c = b_; Tri.a = c_; Tri.b = a_; }
+
+                int a = Convert.ToInt32(Tri.a); // Создаем переменную стороны a типа int 
+                int b = Convert.ToInt32(Tri.b); // Создаем переменную стороны b типа int 
+                int c = Convert.ToInt32(Tri.c); // Создаем переменную стороны c типа int 
+
+                Point p1 = new Point(5, 5); // Задаем первую точку с координатами x равно 5 y равно 5
+                Point p2 = new Point(5 + c * 50, 5); // Задаем второу точку с координатами x равно сумме 5 и произведения стороны c и 50 y равно 5
+
+                bool equal_sides = false; // Создаем переменную типа bool для проверки равнобедренного треугольника
+
+                bool check_equal = false;
+                if (b == a)
+                {
+                    check_equal = true;
+                }
+
+                if (c < b && c < a) { equal_sides = true; } // Задаем значение переменной equal_sides на true в случае если стороны не равны
+                if (check_equal) { if (c > a && c > b) { equal_sides = true; } }
+
+                int temp_a_x = 5; // Создаем переменную типа int условной точки a как значение его координаты x
+                int temp_a_y = 5 + a * 50; // Создаем переменную типа int условной точки a как значение его координаты y
+
+                int temp_b_x = 5 + c * 50; // Создаем переменную типа int условной точки b как значение его координаты x
+                int temp_b_y = 5; // Создаем переменную типа int условной точки b как значение его координаты y
+
+                if (equal_sides == false) { temp_b_x = temp_b_x - b * 50; } else { temp_b_y = temp_b_y + b * 50; } // Меняем координаты точки temp_b в случае если треугольник равнобедренный
+
+                Point p_a = new Point(5, 5 + a * 50); // Дополнительная незадействованная точка a для проверки длины стороны
+                Point p_b = new Point(5 + c * 50, 5 + b * 50); // Дополнительная незадействованная b точка для проверки длины стороны 
+
+                /* Тут будет отступление для объяснения как работает нахождение точки соприкосновения сторон треугольника для его построения на полотне
+                 * Условные точки a и b нужны для нахождения точки соприкосновения сторон треугольника
+                 * За каждый тик цикла приведенного ниже координаты x у точек a и b увеличивается на 1 и уменьшается на 1 соответсвенно
+                 * За каждый тик цикла приведенного ниже координаты y у точки a уменьшается на 1
+                 * А у точки b в случае равнобедренного уменьшается на 1 в ином увеличивается на 1
+                 */
+
+                while (temp_a_x != temp_b_x) { temp_a_x++; temp_b_x--; }
+                while (temp_a_y != temp_b_y) { temp_a_y--; if (equal_sides) { temp_b_y--; } else temp_b_y++; }
+
+                Point p3 = new Point(temp_a_x, temp_a_y); // Задаем третью точку которая является точкой соприкосновения меньших сторон треугольника с координатами равными условной точки temp_a
+
+                Gp.DrawLine(P, p1, p2); // Рисуем Основание треугольника
+                Gp.DrawLine(P, p2, p3); // Рисуем Вторую сторону тругольника
+                Gp.DrawLine(P, p3, p1); // Рисуем третью сторону тругольника
+
+                //gp.DrawLine(p, p1, p_a); // Для отрисовки дополнительных отрезков сторон треугольника
+                //gp.DrawLine(p, p2, p_b); // Для отрисовки дополнительных отрезков сторон треугольника
+            }
+        }
+
+        private void Elements()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             button1 = new Button();
@@ -80,6 +326,7 @@ namespace Triangle
             textBox9 = new TextBox();
             label10 = new Label();
             button2 = new Button();
+            button3 = new Button();
             SuspendLayout();
 
 
@@ -317,6 +564,15 @@ namespace Triangle
             button2.UseVisualStyleBackColor = false;
             button2.Click += new EventHandler(button2_Click);
 
+            button3.BackColor = SystemColors.ActiveCaption;
+            button3.Location = new Point(781, 12);
+            button3.Name = "button2";
+            button3.Size = new Size(27, 23);
+            button3.TabIndex = 28;
+            button3.Text = "X";
+            button3.UseVisualStyleBackColor = false;
+            button3.Click += ClearTheBoard;
+
 
 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -352,217 +608,13 @@ namespace Triangle
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(button1);
+            Controls.Add(button3);
             Gp = panel1.CreateGraphics(); // Указываем полотно для рисования треугольника
             Name = "Form2";
             Text = "Triangle";
             Load += new EventHandler(Form1_Load);
             ResumeLayout(false);
             PerformLayout();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            double r; // временная переменная типа double для метода TryParse
-
-            listView1.Items.Clear(); // Убираем лишние элементы в listView1
-            Gp.Clear(Color.White); // Убираем лишние точки, линии, фигуры на полотне
-            Tri.a = 0;
-            Tri.b = 0;
-            Tri.c = 0;
-            Tri.ha = 0;
-            Tri.hb = 0;
-            Tri.hc = 0;
-            Tri.alpha = 0;
-            Tri.beta = 0;
-            Tri.gamma = 0;
-
-            listView1.Items.Add("Сторона: a"); // Добавляем в Поле listView1 сторону a
-            listView1.Items.Add("Сторона: b"); // Добавляем в Поле listView1 сторону b
-            listView1.Items.Add("Сторона: c"); // Добавляем в Поле listView1 сторону c
-
-            if (double.TryParse(textBox1.Text, out r)) // Проверка на корректный ввод стороны a
-            {
-                Tri.a = Convert.ToDouble(textBox1.Text); // Добавляем значение переменной a экземпляра tri введенного пользователя
-                listView1.Items[0].SubItems.Add(Tri.outputA()); // Добавляем в Значение listView1 стороны a значение переменной a экземпляра tri
-            }
-
-            if (double.TryParse(textBox2.Text, out r)) // Проверка на корректный ввод стороны b
-            {
-                Tri.b = Convert.ToDouble(textBox2.Text); // Добавляем значение переменной b экземпляра tri введенного пользователя
-                listView1.Items[1].SubItems.Add(Tri.outputB()); // Добавляем в Значение listView1 стороны b значение переменной a экземпляра tri
-            }
-
-            if (double.TryParse(textBox3.Text, out r)) // Проверка на корректный ввод стороны c
-            {
-                Tri.c = Convert.ToDouble(textBox3.Text); // Добавляем значение переменной c экземпляра tri введенного пользователя
-                listView1.Items[2].SubItems.Add(Tri.outputC()); // Добавляем в Значение listView1 стороны c значение переменной a экземпляра tri
-            }
-
-            if (Tri.a != 0 && Tri.b != 0 && Tri.c != 0)
-            {
-                Tri.ha = Tri.GetH(Tri.a);
-                Tri.hb = Tri.GetH(Tri.b);
-                Tri.hc = Tri.GetH(Tri.c);
-            } // Добавляем значение переменной h экземпляра tri полученный результатом метода GetH в качестве стороны задаем c
-
-            if (Tri.a != 0 && Tri.b != 0 && Tri.c != 0)
-            {
-                Tri.alpha = Tri.GetAngle(Tri.a, Tri.b, Tri.c);
-                Tri.beta = Tri.GetAngle(Tri.a, Tri.c, Tri.b);
-                Tri.gamma = Tri.GetAngle(Tri.b, Tri.c, Tri.a);
-            }
-
-            if (textBox9.Text == "")
-            {
-                textBox9.Text = Tri.alpha.ToString();
-            }
-            if (textBox8.Text == "")
-            {
-                textBox8.Text = Tri.beta.ToString();
-            }
-            if (textBox7.Text == "")
-            {
-                textBox7.Text = Tri.gamma.ToString();
-            }
-
-            if (textBox4.Text == "")
-            {
-                textBox4.Text = Tri.ha.ToString();
-            }
-            if (textBox5.Text == "")
-            {
-                textBox5.Text = Tri.hb.ToString();
-            }
-            if (textBox6.Text == "")
-            {
-                textBox6.Text = Tri.hc.ToString();
-            }
-
-            if (textBox4.Text == "")
-            {
-                textBox4.Text = Tri.ha.ToString();
-            }
-            if (textBox5.Text == "")
-            {
-                textBox5.Text = Tri.hb.ToString();
-            }
-            if (textBox6.Text == "")
-            {
-                textBox6.Text = Tri.hc.ToString();
-            }
-
-            if (textBox1.Text == "")
-            {
-                textBox1.Text = Tri.a.ToString();
-            }
-            if (textBox2.Text == "")
-            {
-                textBox2.Text = Tri.b.ToString();
-            }
-            if (textBox3.Text == "")
-            {
-                textBox3.Text = Tri.c.ToString();
-            }
-
-            double a_ = Tri.a;
-            double b_ = Tri.b;
-            double c_ = Tri.c;
-
-            double alpha_ = Tri.alpha;
-            double beta_ = Tri.beta;
-            double gamma_ = Tri.gamma;
-
-
-            if (a_ == Tri.getBiggest()) { Tri.c = a_; Tri.a = b_; Tri.b = c_; } // Перестановка значений для удобства по принципу c равно большей стороне а остальные меньшей
-            else if (b_ == Tri.getBiggest()) { Tri.c = b_; Tri.a = c_; Tri.b = a_; }
-
-            if (H_check) // Проверка состояния checkBox1 при помощи переменной h_check
-            {
-                listView1.Items.Add("Высота: h(a)"); // Добавляем в Поле listView1 высоту h
-                listView1.Items.Add("Высота: h(b)");
-                listView1.Items.Add("Высота: h(c)");
-                listView1.Items.Add("Площадь: s"); // Добавляем в Поле listView1 площадь s
-                listView1.Items.Add("Периметр: p"); // Добавляем в Поле listView1 периметр p
-                listView1.Items.Add("Синус: ");
-                listView1.Items.Add("Косинус: ");
-                listView1.Items.Add("Тангенс: ");
-                listView1.Items.Add("Альфа: ");
-                listView1.Items.Add("Бета: ");
-                listView1.Items.Add("Гамма: ");
-                listView1.Items.Add("Существует ?"); // Добавляем в Поле listView1 правильность треугольника
-                listView1.Items.Add("Тип"); // Добавляем в Поле listView1 тип треугольника
-
-                if (Tri.ExistTriangle) { listView1.Items[14].SubItems.Add("Да"); } // Проверка на наличие правильности треугольника методом экземпляра tri ExistTriangle. В случае истинны добавляем в Значение listView1 "Существует"
-                else listView1.Items[14].SubItems.Add("Нет"); // В ином случае добавляем в Значение listView1 "Не существует"
-
-                if (Tri.ExistTriangle) // Проверка на правильность треугольника
-                {
-                    listView1.Items[3].SubItems.Add(Convert.ToString(Tri.outputH(Tri.ha))); // Добавляем в Значение listView1 высоты h значение переменной h экземпляра tri
-                    listView1.Items[4].SubItems.Add(Convert.ToString(Tri.outputH(Tri.hb)));
-                    listView1.Items[5].SubItems.Add(Convert.ToString(Tri.outputH(Tri.hc)));
-                    listView1.Items[7].SubItems.Add(Convert.ToString(Tri.Perimeter())); // Добавляем в Значение listView1 периметра его значение экземпляра tri
-                    listView1.Items[6].SubItems.Add(Convert.ToString(Tri.Surface())); // Добавляем в Значение listView1 площади его значение экземпляра tri
-
-                    listView1.Items[11].SubItems.Add(Convert.ToString(Tri.alpha));
-                    listView1.Items[12].SubItems.Add(Convert.ToString(Tri.beta));
-                    listView1.Items[13].SubItems.Add(Convert.ToString(Tri.gamma));
-
-                    if (Tri.c * Tri.c == Tri.a * Tri.a + Tri.b * Tri.b) { listView1.Items[15].SubItems.Add("Прямоугольный"); } // Добавляем в Значение listView1 тип "Прямоугольный" если квадрат большей стороны равно суммы квадратов остальных сторон
-                    else if (Tri.c * Tri.c < Tri.a * Tri.a + Tri.b * Tri.b) { listView1.Items[15].SubItems.Add("Остроугольный"); } // Добавляем в Значение listView1 тип "Остроугольный" если квадрат большей стороны меньше суммы квадратов остальных сторон
-                    else if (Tri.c * Tri.c > Tri.a * Tri.a + Tri.b * Tri.b) { listView1.Items[15].SubItems.Add("Тупоугольный"); } // Добавляем в Значение listView1 тип "Тупоугольный" если квадрат большей стороны больше суммы квадратов остальных сторон
-                }
-            }
-
-            if (Tri.ExistTriangle) // Проверка правильности треугольника для отрисовки на полотне
-            {
-                int a = Convert.ToInt32(Tri.a); // Создаем переменную стороны a типа int 
-                int b = Convert.ToInt32(Tri.b); // Создаем переменную стороны b типа int 
-                int c = Convert.ToInt32(Tri.c); // Создаем переменную стороны c типа int 
-
-                Point p1 = new Point(5, 5); // Задаем первую точку с координатами x равно 5 y равно 5
-                Point p2 = new Point(5 + c * 50, 5); // Задаем второу точку с координатами x равно сумме 5 и произведения стороны c и 50 y равно 5
-
-                bool equal_sides = false; // Создаем переменную типа bool для проверки равнобедренного треугольника
-
-                bool check_equal = false;
-                if (b == a)
-                {
-                    check_equal = true;
-                }
-
-                if (c < b && c < a) { equal_sides = true; } // Задаем значение переменной equal_sides на true в случае если стороны не равны
-                if (check_equal) { if (c > a && c > b) { equal_sides = true; } }
-
-                int temp_a_x = 5; // Создаем переменную типа int условной точки a как значение его координаты x
-                int temp_a_y = 5 + a * 50; // Создаем переменную типа int условной точки a как значение его координаты y
-
-                int temp_b_x = 5 + c * 50; // Создаем переменную типа int условной точки b как значение его координаты x
-                int temp_b_y = 5; // Создаем переменную типа int условной точки b как значение его координаты y
-
-                if (equal_sides == false) { temp_b_x = temp_b_x - b * 50; } else { temp_b_y = temp_b_y + b * 50; } // Меняем координаты точки temp_b в случае если треугольник равнобедренный
-
-                Point p_a = new Point(5, 5 + a * 50); // Дополнительная незадействованная точка a для проверки длины стороны
-                Point p_b = new Point(5 + c * 50, 5 + b * 50); // Дополнительная незадействованная b точка для проверки длины стороны 
-
-                /* Тут будет отступление для объяснения как работает нахождение точки соприкосновения сторон треугольника для его построения на полотне
-                 * Условные точки a и b нужны для нахождения точки соприкосновения сторон треугольника
-                 * За каждый тик цикла приведенного ниже координаты x у точек a и b увеличивается на 1 и уменьшается на 1 соответсвенно
-                 * За каждый тик цикла приведенного ниже координаты y у точки a уменьшается на 1
-                 * А у точки b в случае равнобедренного уменьшается на 1 в ином увеличивается на 1
-                 */
-
-                while (temp_a_x != temp_b_x) { temp_a_x++; temp_b_x--; }
-                while (temp_a_y != temp_b_y) { temp_a_y--; if (equal_sides) { temp_b_y--; } else temp_b_y++; }
-
-                Point p3 = new Point(temp_a_x, temp_a_y); // Задаем третью точку которая является точкой соприкосновения меньших сторон треугольника с координатами равными условной точки temp_a
-
-                Gp.DrawLine(P, p1, p2); // Рисуем Основание треугольника
-                Gp.DrawLine(P, p2, p3); // Рисуем Вторую сторону тругольника
-                Gp.DrawLine(P, p3, p1); // Рисуем третью сторону тругольника
-
-                //gp.DrawLine(p, p1, p_a); // Для отрисовки дополнительных отрезков сторон треугольника
-                //gp.DrawLine(p, p2, p_b); // Для отрисовки дополнительных отрезков сторон треугольника
-            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -612,7 +664,7 @@ namespace Triangle
 
         private void button2_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Нужно ввести: \n- Значение трех сторон\n- Пока все", "Помощник");
+            MessageBox.Show("Нужно ввести: \n- Значение трех сторон, чтобы получить все параметры\n- Значение стороны и ее высоту, чтобы получить площадь\n- Пока все", "Помощник");
         }
 
         private void label5_Click(object sender, EventArgs e)

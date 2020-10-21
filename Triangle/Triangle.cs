@@ -30,7 +30,6 @@ namespace Triangle
             ha = Ha;
             hb = Hb;
             hc = Hc;
-
         }
 
         public Triangle()
@@ -74,7 +73,7 @@ namespace Triangle
         {
             double p = 0;
             p = a + b + c;
-            return p;
+            return Math.Round(p, 2);
         }
 
         public double Surface()
@@ -82,22 +81,18 @@ namespace Triangle
             double s = 0;
             double p = 0;
             p = (a + b + c) / 2;
-            s = Math.Sqrt((p * (p - a) * (p - b) * (p - c)));
+            s = Math.Round(Math.Sqrt((p * (p - a) * (p - b) * (p - c))), 2);
             return s;
         }
 
-        public double SurfaceWithH(double h)
+        public double SurfaceWithH(double side, double h)
         {
-            double s = 0;
-            s = (a * h) / 2;
-            return s;
+            return Math.Round(((side * h) / 2), 2);
         }
 
-        public double GetH(double par) // Метод для получения значения высоты на основе данной стороны
+        public double GetH(double side) // Метод для получения значения высоты на основе данной стороны
         {
-            double res;
-            res = Surface() * 2 / par;
-            return res;
+            return Math.Round((Surface() * 2 / side), 2);
         }
 
         public double GetAngle(double fside, double sside, double tside)
