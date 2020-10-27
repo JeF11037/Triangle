@@ -33,6 +33,13 @@ namespace Triangle
             
         }
 
+        public Triangle(double side, double anglef, double angles, int none)
+        {
+            a = side;
+            b = GetSideBySideAndTwoAngles(side, anglef, angles);
+            
+        }
+
         public Triangle(double side, double h, string name)
         {
             switch (name)
@@ -105,6 +112,15 @@ namespace Triangle
             else big = c;
 
             return big;
+        }
+
+        public double GetSideBySideAndTwoAngles(double side, double anglef, double angles)
+        {
+            double result = 0;
+
+            result = (side * Math.Sin(anglef)) / Math.Sin(angles);
+
+            return result;
         }
 
         public double Perimeter()

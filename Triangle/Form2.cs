@@ -46,6 +46,7 @@ namespace Triangle
         Triangle tri = new Triangle(); // Экземпляр класса Triangle
         Triangle triabc = new Triangle();
         Triangle trisideh = new Triangle();
+        Triangle trisideangles = new Triangle();
 
         bool h_check = true; // Переменная типа bool для проверки состояния checkBox1
 
@@ -127,10 +128,30 @@ namespace Triangle
                 Tri.hc = Convert.ToDouble(textBox6.Text);
             }
 
+            if (double.TryParse(textBox7.Text, out r))
+            {
+                Tri.alpha = Convert.ToDouble(textBox7.Text);
+            }
+
+            if (double.TryParse(textBox8.Text, out r))
+            {
+                Tri.beta = Convert.ToDouble(textBox8.Text);
+            }
+
+            if (double.TryParse(textBox9.Text, out r))
+            {
+                Tri.gamma = Convert.ToDouble(textBox9.Text);
+            }
+
             if (Tri.a != 0 && Tri.b != 0 && Tri.c != 0)
             {
                 triabc = new Triangle(Tri.a, Tri.b, Tri.c);
             } // Добавляем значение переменной h экземпляра tri полученный результатом метода GetH в качестве стороны задаем c
+
+            if (Tri.a != 0 && Tri.alpha != 0 && Tri.beta != 0 || Tri.a != 0 && Tri.alpha != 0 && Tri.gamma != 0)
+            {
+                trisideangles = new Triangle(Tri.a, Tri.alpha, Tri.beta, 0);
+            }
 
             if (textBox9.Text == "")
             {
