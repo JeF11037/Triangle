@@ -36,8 +36,9 @@ namespace Triangle
         public Triangle(double side, double anglef, double angles, int none)
         {
             a = side;
-            b = GetSideBySideAndTwoAngles(side, anglef, angles);
-            
+            b = GetSideBySideAndTwoAngles(side, (180 - anglef - angles), anglef);
+            c = GetSideBySideAndTwoAngles(a, angles, anglef);
+
         }
 
         public Triangle(double side, double h, string name)

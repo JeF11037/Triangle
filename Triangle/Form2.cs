@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Triangle
@@ -148,46 +149,101 @@ namespace Triangle
                 triabc = new Triangle(Tri.a, Tri.b, Tri.c);
             } // Добавляем значение переменной h экземпляра tri полученный результатом метода GetH в качестве стороны задаем c
 
-            if (Tri.a != 0 && Tri.alpha != 0 && Tri.beta != 0 || Tri.a != 0 && Tri.alpha != 0 && Tri.gamma != 0)
+            double side = 0;
+            double anglef = 0;
+            double angles = 0;
+
+            int tick_count_angle = 0;
+            int tick_count_side = 0;
+
+            double[] list_angle = new double[] { Tri.alpha, Tri.beta, Tri.gamma};
+            double[] list_side = new double[] { Tri.a, Tri.b, Tri.c };
+
+            for (int tick = 0; tick < list_angle.Length; tick++)
             {
-                trisideangles = new Triangle(Tri.a, Tri.alpha, Tri.beta, 0);
+                if (list_angle[tick] != 0)
+                {
+                    tick_count_angle += tick;
+                }
+                if (list_side[tick] != 0)
+                {
+                    tick_count_side += tick;
+                }
             }
 
-            if (textBox9.Text == "")
+            switch (tick_count_angle)
+            {
+                case 1:
+                    anglef = list_angle[0];
+                    angles = list_angle[1];
+                    break;
+                case 2:
+                    anglef = list_angle[0];
+                    angles = list_angle[2];
+                    break;
+                case 3:
+                    anglef = list_angle[1];
+                    angles = list_angle[2];
+                    break;
+            }
+
+            switch (tick_count_side)
+            {
+                case 0:
+                    side = list_side[0];
+                    break;
+                case 1:
+                    side = list_side[1];
+                    break;
+                case 2:
+                    side = list_side[2];
+                    break;
+            }
+
+            /*if (list_angle.Sum() == (anglef + angles) && anglef != 0 && angles != 0)
+            {
+                if (list_side.Sum() == side && side != 0)
+                {
+                    trisideangles = new Triangle(side, anglef, angles, 0);
+                    triabc = new Triangle(trisideangles.a, trisideangles.b, trisideangles.c);
+                }
+            }*/
+
+            if (textBox9.Text == "" && triabc.gamma != 0)
             {
                 textBox9.Text = triabc.alpha.ToString();
             }
-            if (textBox8.Text == "")
+            if (textBox8.Text == "" && triabc.beta != 0)
             {
                 textBox8.Text = triabc.beta.ToString();
             }
-            if (textBox7.Text == "")
+            if (textBox7.Text == "" && triabc.alpha != 0)
             {
                 textBox7.Text = triabc.gamma.ToString();
             }
 
-            if (textBox4.Text == "")
+            if (textBox4.Text == "" && triabc.ha != 0)
             {
                 textBox4.Text = triabc.ha.ToString();
             }
-            if (textBox5.Text == "")
+            if (textBox5.Text == "" && triabc.hb != 0)
             {
                 textBox5.Text = triabc.hb.ToString();
             }
-            if (textBox6.Text == "")
+            if (textBox6.Text == "" && triabc.hc != 0)
             {
                 textBox6.Text = triabc.hc.ToString();
             }
 
-            if (textBox1.Text == "")
+            if (textBox1.Text == "" && triabc.a != 0)
             {
                 textBox1.Text = triabc.a.ToString();
             }
-            if (textBox2.Text == "")
+            if (textBox2.Text == "" && triabc.b != 0)
             {
                 textBox2.Text = triabc.b.ToString();
             }
-            if (textBox3.Text == "")
+            if (textBox3.Text == "" && triabc.c != 0)
             {
                 textBox3.Text = triabc.c.ToString();
             }
@@ -216,19 +272,19 @@ namespace Triangle
                 if (Tri.ExistTriangle) { listView1.Items[11].SubItems.Add("Да"); } // Проверка на наличие правильности треугольника методом экземпляра tri ExistTriangle. В случае истинны добавляем в Значение listView1 "Существует"
                 else listView1.Items[11].SubItems.Add("Нет"); // В ином случае добавляем в Значение listView1 "Не существует"
 
-                if (Tri.a != 0 && Tri.ha != 0)
+                if (Tri.a != 0 && Tri.ha != 0 && Tri.a > 0 && Tri.ha > 0)
                 {
                     trisideh = new Triangle(Tri.a, Tri.ha, "a");
                     listView1.Items[3].SubItems.Add(Convert.ToString(Tri.outputH(Tri.ha)));
                     listView1.Items[6].SubItems.Add(Convert.ToString(Tri.SurfaceWithH(Tri.a, Tri.ha)));
                 }
-                if (Tri.b != 0 && Tri.hb != 0)
+                if (Tri.b != 0 && Tri.hb != 0 && Tri.b > 0 && Tri.hb > 0)
                 {
                     trisideh = new Triangle(Tri.b, Tri.hb, "b");
                     listView1.Items[4].SubItems.Add(Convert.ToString(Tri.outputH(Tri.hb)));
                     listView1.Items[6].SubItems.Add(Convert.ToString(Tri.SurfaceWithH(Tri.b, Tri.hb)));
                 }
-                if (Tri.c != 0 && Tri.hc != 0)
+                if (Tri.c != 0 && Tri.hc != 0 && Tri.c > 0 && Tri.hc > 0)
                 {
                     trisideh = new Triangle(Tri.c, Tri.hc, "c");
                     listView1.Items[5].SubItems.Add(Convert.ToString(Tri.outputH(Tri.hc)));
@@ -275,6 +331,10 @@ namespace Triangle
 
                 if (c < b && c < a) { equal_sides = true; } // Задаем значение переменной equal_sides на true в случае если стороны не равны
                 if (check_equal) { if (c > a && c > b) { equal_sides = true; } }
+                if (a == b && b == c)
+                {
+                    equal_sides = true;
+                }
 
                 int temp_a_x = 5; // Создаем переменную типа int условной точки a как значение его координаты x
                 int temp_a_y = 5 + a * 50; // Создаем переменную типа int условной точки a как значение его координаты y
@@ -621,6 +681,7 @@ namespace Triangle
             Controls.Add(button1);
             Controls.Add(button3);
             Gp = panel1.CreateGraphics(); // Указываем полотно для рисования треугольника
+            panel1.BackColor = Color.White;
             Name = "Form2";
             Text = "Triangle";
             Load += new EventHandler(Form1_Load);
